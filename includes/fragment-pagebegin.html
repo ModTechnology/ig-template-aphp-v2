@@ -2,8 +2,8 @@
 <!DOCTYPE HTML>
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
-    {% if site.data.info.matomo.tag %}
-      {{ site.data.info.matomo.tag }}
+    {% if site.data.features.matomo.tag %}
+      {{ site.data.features.matomo.tag }}
     {% endif %}
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
     <title>{{site.data.pages[page.path].title | escape_once}} - {{site.data.fhir.ig.title | escape_once}} v{{site.data.fhir.ig.version | escape_once}}</title>
