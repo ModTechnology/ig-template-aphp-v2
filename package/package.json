@@ -1,6 +1,6 @@
 {
   "name" : "aphp.fhir.template",
-  "version" : "1.1.0",
+  "version" : "1.2.0",
   "type" : "fhir.template",
   "license" : "CC0-1.0",
   "description" : "AP-HP FHIR Template - for use with AP-HP-published FHIR IGs",
