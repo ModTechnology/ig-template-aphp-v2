@@ -2,6 +2,18 @@
 <!DOCTYPE HTML>
 <html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
 <head>
+    {% if site.data.info.matomo.tag == 'true' %}
+    <!-- Matomo Tag Manager -->
+    <script>
+    var _mtm = window._mtm = window._mtm || [];
+    _mtm.push({'mtm.startTime': (new Date().getTime()), 'event': 'mtm.Start'});
+    (function() {
+        var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+        g.async=true; g.src='{{site.data.info.matomo.src}}'; s.parentNode.insertBefore(g,s);
+    })();
+    </script>
+    <!-- End Matomo Tag Manager -->
+     {% endif %}
     <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
     <title>{{site.data.pages[page.path].title | escape_once}} - {{site.data.fhir.ig.title | escape_once}} v{{site.data.fhir.ig.version | escape_once}}</title>
 
