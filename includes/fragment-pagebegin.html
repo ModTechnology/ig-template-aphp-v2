@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML>
+<html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+    {% if site.data.features.matomo.tag %}
+      {{ site.data.features.matomo.tag }}
+    {% endif %}
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <title>{{site.data.pages[page.path].title | escape_once}} - {{site.data.fhir.ig.title | escape_once}} v{{site.data.fhir.ig.version | escape_once}}</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="author" content="http://hl7.org/fhir"/>
+
+    <link href="{{site.data.info.assets}}fhir.css" rel="stylesheet"/>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{site.data.info.assets}}assets/css/bootstrap-fhir.css" rel="stylesheet"/>
+
+    <!-- Project extras -->
+    <link href="{{site.data.info.assets}}assets/css/project.css" rel="stylesheet"/>
+    <link href="{{site.data.info.assets}}assets/css/pygments-manni.css" rel="stylesheet"/>
+    <link href="{{site.data.info.assets}}assets/css/jquery-ui.css" rel="stylesheet"/>
+    <link href="{{site.data.info.assets}}assets/css/prism.css" rel="stylesheet" />
+    <link href="{{site.data.info.assets}}assets/css/cqf.css" rel="stylesheet" />
+    {% include fragment-css.html %}
+
+    <script type="text/javascript" src="fhir-table-scripts.js"> </script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="assets/js/html5shiv.js"></script>
+    <script src="assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="{{site.data.info.assets}}assets/ico/icon-fhir-144.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="{{site.data.info.assets}}assets/ico/icon-fhir-114.png"/>
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="{{site.data.info.assets}}assets/ico/icon-fhir-72.png"/>
+    <link rel="apple-touch-icon-precomposed" href="{{site.data.info.assets}}assets/ico/icon-fhir-57.png"/>
+    <link rel="shortcut icon" href="{{site.data.info.assets}}assets/ico/favicon.png"/>
+</head>
+<body onload="document.body.style.opacity='1'">
+{% assign label = {{site.data.pages[page.path].label}} | split: '.0' %}
+{% assign igId = site.data.fhir.ig.id | prepend: "ImplementationGuide/" %}
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/prism.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/prism-lang-fml.min.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/prism-lang-fsh.min.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/mermaid.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/mermaid-init.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/d3.min.js"></script>
+<script type="text/javascript" src="{{site.data.info.assets}}assets/js/d3-init.js"></script>
+{% if label == "0" or site.data.pages[page.path].label == "0.0" %}
+<style type="text/css">h2{--heading-prefix:""}
+h3,h4,h5,h6{--heading-prefix:""}</style>
+{% else %}
+<style type="text/css">h2{--heading-prefix:"{{site.data.info.headingOffset}}{{label}}"}
+h3,h4,h5,h6{--heading-prefix:"{{site.data.info.headingOffset}}{{site.data.pages[page.path].label}}"}</style>
+{% endif %}
+
+<div id="segment-header-nav" class="segment">
+    <div id="family-nav">
+        <a id="family-logo" data-no-external="true" href="https://www.aphp.fr">
+            <img height="40" alt="Site officiel de l'AP-HP" src="{{site.data.info.assets}}assets/images/aphp-logo.png"/>
+        </a>
+    </div>
+    <button id="nav-toggle" aria-label="Menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav id="aphp-nav">
+        {% include menu.xml %}
+    </nav>
+</div>  <!-- /segment-header-nav -->
+
+<!--status-bar-->
+{% assign shownav = site.data.info.shownav | downcase | slice: 0 %}
+<script>var SITE_PAGES=[{% for p in site.data.pages %}{% assign path = p[0] %}{% assign data = p[1] %}{% if data.title and data.label and data.label != '' %}{"title":{{ data.title | jsonify }},"href":{{ path | jsonify }},"label":{{ data.label | jsonify }}},{% endif %}{% endfor %}];</script>
+
+<a name="top"> </a>
+<div id="segment-content" class="segment">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-4 hidden-sm hidden-xs" id="sidebar-wrapper">
+                <nav id="sidebar-nav">
+                    <ul class="sidebar-list" id="sidebar-list"></ul>
+                </nav>
+            </div>
+            <div class="col-lg-9 col-md-8 col-sm-12" id="content-wrapper">
+                <div id="segment-ig-title">
+                    <span class="ig-title">{{site.data.fhir.ig.title | escape_once}}</span>
+                    <span class="ig-version">{{site.data.fhir.ig.version}} - {{site.data.info.releaselabel}}</span>
+                </div>
+                <div class="inner-wrapper">

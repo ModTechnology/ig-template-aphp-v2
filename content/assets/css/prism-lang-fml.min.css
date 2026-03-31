@@ -1,0 +1,12 @@
+/*!
+ * FHIR Mapping Language (FML) Styles for Prism.js
+ *
+ * This stylesheet provides FHIR Implementation Guide compliant syntax highlighting
+ * for FHIR Mapping Language (FML) code blocks. Colors and styles are designed to
+ * integrate seamlessly with HL7's official IG templates.
+ *
+ * @version 1.0.0
+ * @author Claude Code
+ * @license MIT
+ * @see docs/FML-FHIR-IG-MAPPING.md for detailed color rationale
+ */pre[class*=language-fml] .token.metadata-info{font-style:italic}pre[class*=language-fml] .token.metadata-info .token.metadata-key{color:#8e44ad}pre[class*=language-fml] .token.metadata-info .token.metadata-value .token.operator{color:navy}pre[class*=language-fml] .token.metadata-info .token.metadata-value .token.string{color:green}pre[class*=language-fml] .token.comment{color:green;font-style:italic}pre[class*=language-fml] .token.function,pre[class*=language-fml] .token.keyword,pre[class*=language-fml] .token.mode-keyword,pre[class*=language-fml] .token.structure-keyword,pre[class*=language-fml] .token.transformation-keyword,pre[class*=language-fml] .token.variable-binding{color:#000;font-weight:700}pre[class*=language-fml] .token.transformation-arrow{color:navy;font-weight:700}pre[class*=language-fml] .token.operator{color:navy}pre[class*=language-fml] .token.punctuation{color:navy}pre[class*=language-fml] .token.string{color:#00f}pre[class*=language-fml] .token.string .token.url{color:#00f;text-decoration:none}pre[class*=language-fml] .token.string .token.url:hover{text-decoration:underline}pre[class*=language-fml] .token.type{color:green}pre[class*=language-fml] .token.group-definition .token.group-name,pre[class*=language-fml] .token.path{color:#000}pre[class*=language-fml] .token.rule-label .token.string{color:#000;font-style:italic}pre[class*=language-fml] .token.boolean,pre[class*=language-fml] .token.number{color:#905}pre[class*=language-fml] .token.identifier,pre[class*=language-fml] .token.variable{color:maroon}pre[class*=language-fml] .token.conceptmap-operator{color:#9a6e3a;font-weight:600}pre[class*=language-fml] .token.prefix{color:#8e44ad}pre[class*=language-fml] .token.prefix .token.keyword{color:#428bca}pre[class*=language-fml] .token.prefix .token.property{color:#905}
