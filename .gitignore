@@ -3,3 +3,4 @@
 .idea/
 *.db
 *.index.json
+.index.json

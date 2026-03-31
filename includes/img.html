@@ -1,0 +1,13 @@
+<!-- all this Bootstrap html for getting an narrow image to fit nicely in text - 640 pix wide -->
+
+<div style="display: flex; justify-content: center;">
+  <figure class="figure" style="width: fit-content; margin: 0;">
+    <img  src="{{include.img}}" 
+          class="figure-img img-responsive img-rounded"
+          style="display: block; max-width: 100%;"
+          alt="{{ include.alt | default: include.img }}">
+    {% if include.caption %}
+    <figcaption class="figure-caption"><strong>{{ include.caption }}</strong></figcaption>
+    {% endif %}
+  </figure>
+</div>
