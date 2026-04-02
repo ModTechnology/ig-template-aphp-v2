@@ -1,5 +1,14 @@
-/* AP-HP IG Template */
+/**
+ * aphp-ig.css
+ * Feuille de styles du template AP-HP pour les guides d'implémentation FHIR.
+ * Basé sur Bootstrap 3 (via le publisher) avec la charte graphique AP-HP.
+ */
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap');
+
+/* ============================================================
+   Variables
+   ============================================================ */
 
 :root {
   --ig-status-text-color: rgb(1, 107, 182);
@@ -30,7 +39,10 @@
   --breadcrumb-text-color: rgb(1, 107, 182);
 }
 
-/* Full width — override Bootstrap container */
+/* ============================================================
+   Base
+   ============================================================ */
+
 .container {
   max-width: 100% !important;
   width: 100% !important;
@@ -38,18 +50,19 @@
   padding-right: 30px !important;
 }
 
-/* Hide body until JS has run (onload sets opacity:1) */
 body {
   opacity: 0;
   transition: opacity 0.15s ease;
 }
 
-/* Typography */
 body, p, li, td, th, span, div, a, input, select, textarea {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 }
 
-/* Publish box — full width banner below navbar, moved by JS */
+/* ============================================================
+   Publish box
+   ============================================================ */
+
 #publish-box,
 .publish-box {
   display: block !important;
@@ -67,7 +80,10 @@ body, p, li, td, th, span, div, a, input, select, textarea {
 #publish-box a,
 .publish-box a { color: #F57F00 !important; text-decoration: underline; }
 
-/* IG title — inside content column, below publish box */
+/* ============================================================
+   Titre de l'IG
+   ============================================================ */
+
 #segment-ig-title {
   display: flex;
   flex-direction: row;
@@ -90,7 +106,10 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   flex-shrink: 0;
 }
 
-/* Header */
+/* ============================================================
+   En-tête et navigation principale
+   ============================================================ */
+
 #segment-header-nav {
   display: flex;
   flex-direction: row;
@@ -103,7 +122,6 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   flex-shrink: 0;
 }
 
-/* Nav */
 #aphp-nav {
   display: flex;
   align-items: center;
@@ -113,11 +131,13 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: 10px;
+  justify-content: flex-end;
+  gap: 0;
   list-style: none;
   margin: 0;
   padding: 0;
   float: none;
+  flex: 1;
 }
 
 #aphp-nav .nav.navbar-nav > li > a {
@@ -128,6 +148,7 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   text-decoration: none;
   display: block;
   text-shadow: none;
+  white-space: nowrap;
 }
 
 #aphp-nav .nav.navbar-nav > li > a:hover {
@@ -136,7 +157,7 @@ body, p, li, td, th, span, div, a, input, select, textarea {
 }
 
 #aphp-nav .dropdown-menu {
-  background-color: #ffffff;
+  background-color: #ffffff !important;
   border: 1px solid #e0e0e0;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
   border-radius: 4px;
@@ -155,7 +176,6 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   color: #153D8A !important;
 }
 
-/* Dropdown open state — override Bootstrap FHIR red */
 #aphp-nav .nav.navbar-nav > li.open > a,
 #aphp-nav .nav.navbar-nav > li.open > a:hover,
 #aphp-nav .nav.navbar-nav > li.open > a:focus,
@@ -166,23 +186,19 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   border: none !important;
 }
 
-#aphp-nav .dropdown-menu {
-  background-color: #ffffff !important;
-}
-
 #aphp-nav .nav.navbar-nav > li:last-child .dropdown-menu {
   right: 0;
   left: auto;
 }
 
-/* Caret */
 #aphp-nav .caret {
   border-top-color: #016BB6;
 }
 
+/* ============================================================
+   Icônes de liens externes (masquées)
+   ============================================================ */
 
-
-/* Hide external link icons */
 p a[href^="http://"]::after,
 p a[href^="https://"]::after,
 li a[href^="http://"]::after,
@@ -194,8 +210,19 @@ a img[src*="external"],
   display: none !important;
 }
 
+a[data-no-external] img.external,
+img.external,
+svg.external,
+span.external,
+a .glyphicon-share,
+#segment-footer a img {
+  display: none !important;
+}
 
-/* Breadcrumb */
+/* ============================================================
+   Fil d'Ariane
+   ============================================================ */
+
 #segment-breadcrumb {
   border-bottom: none;
 }
@@ -206,7 +233,10 @@ a img[src*="external"],
   margin-bottom: 0;
 }
 
-/* Tabs — match Figma style */
+/* ============================================================
+   Onglets (pages ressources)
+   ============================================================ */
+
 .nav.nav-tabs {
   background-color: #FFFFFF !important;
   border: none !important;
@@ -258,7 +288,7 @@ a img[src*="external"],
   border: none !important;
 }
 
-/* Resource pages — tabs moved before .inner-wrapper by JS */
+/* Zone de contenu bleue (pages avec onglets) */
 #content-wrapper > .inner-wrapper.has-tabs {
   background-color: #F4F8FF !important;
   padding: 40px !important;
@@ -266,7 +296,6 @@ a img[src*="external"],
   width: 100% !important;
 }
 
-/* The IG Publisher wraps content in div.col-12 — reset its width/padding */
 #content-wrapper > .inner-wrapper.has-tabs > .col-12 {
   width: 100% !important;
   max-width: 100% !important;
@@ -274,7 +303,10 @@ a img[src*="external"],
   float: none !important;
 }
 
-/* Content */
+/* ============================================================
+   Contenu principal
+   ============================================================ */
+
 #segment-content {
   padding-top: 20px;
   padding-bottom: 40px;
@@ -284,26 +316,31 @@ a img[src*="external"],
   max-width: 1385px;
 }
 
-/* Headings */
+/* ============================================================
+   Titres
+   ============================================================ */
+
 h2::before, h3::before, h4::before, h5::before, h6::before {
-  color: #B7B7B7 !important;
-  font-size: 0.75em;
-  font-weight: 700;
-  margin-right: 4px;
+  content: none !important;
+  display: none !important;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', sans-serif !important;
   color: #000000;
+  scroll-margin-top: 24px;
 }
 
 h1 { font-size: 32px; font-weight: 700; }
-
 h2 { font-size: 24px; font-weight: 700; margin-top: 60px; margin-bottom: 20px; }
 h3 { font-size: 20px; font-weight: 700; margin-top: 40px; margin-bottom: 15px; }
+h6 { font-size: 13px; }
 h1:first-child, h2:first-child { margin-top: 0; }
 
-/* Body */
+/* ============================================================
+   Texte
+   ============================================================ */
+
 p, li {
   font-size: 16px;
   line-height: 130%;
@@ -313,19 +350,20 @@ p, li {
 ul, ol { padding-left: 20px; }
 ul li, ol li { margin-bottom: 5px; }
 
-/* Tables */
+/* ============================================================
+   Tableaux
+   ============================================================ */
+
 table {
   border-collapse: separate;
   border-spacing: 0 5px;
 }
-
 
 table.grid {
   width: 100%;
   border: none;
 }
 
-/* Override inline col width from IG Publisher */
 table.grid col {
   width: auto !important;
 }
@@ -356,7 +394,7 @@ table td {
 table:not(.colsi) tr td { background-color: #FFFFFF !important; }
 table:not(.colsi) tr th { background-color: #DEEAFF !important; }
 
-/* Dependency table */
+/* Tableau de dépendances */
 table[id="dep"] {
   border-collapse: separate !important;
   border-spacing: 0 3px !important;
@@ -384,7 +422,7 @@ table[id="dep"] tr td {
   background-color: #FFFFFF !important;
 }
 
-/* Metadata table (Official URL, Version) */
+/* Tableau de métadonnées (Official URL, Version) */
 table.colsi {
   border: none;
   width: 100%;
@@ -407,7 +445,7 @@ table.colsi td span.copy-text {
   font-style: normal;
 }
 
-/* Table scroll wrapper — fade indicator */
+/* Scroll horizontal pour les tableaux larges */
 .table-scroll-wrapper {
   position: relative;
   overflow-x: auto;
@@ -420,14 +458,16 @@ table.colsi td span.copy-text {
   min-width: 600px;
 }
 
-/* On desktop, tables don't need min-width */
 @media (min-width: 992px) {
   .table-scroll-wrapper table {
     min-width: auto;
   }
 }
 
-/* Footer */
+/* ============================================================
+   Pied de page
+   ============================================================ */
+
 #segment-footer {
   background-color: #F4F8FF !important;
   border-top: 1px solid #e0e0e0;
@@ -451,31 +491,32 @@ table.colsi td span.copy-text {
   font-size: 13px;
   line-height: 1.6;
   margin: 0;
-  display: inline;
 }
 
 #segment-footer, #segment-footer * {
   color: #016BB6 !important;
 }
 
+#segment-footer .inner-wrapper p {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+}
 #segment-footer .inner-wrapper p br { display: none; }
-#segment-footer .inner-wrapper p span { color: #016BB6 !important; }
+#segment-footer .inner-wrapper p span { color: #016BB6 !important; margin-left: auto; }
 #segment-footer a { color: #016BB6 !important; text-decoration: none; font-weight: 700; }
 #segment-footer img[alt="CC0"] { display: none; }
-
-/* External link icons */
-a[data-no-external] img.external,
-img.external,
-svg.external,
-span.external,
-a .glyphicon-share,
-#segment-footer a img {
-  display: none !important;
-}
-
 #segment-post-footer { display: none !important; }
 
-/* In-page TOC - moved to sidebar by JS */
+/* Masquer la navigation prev/next du footer (upstream) */
+#segment-footer div[style*="footer-nav-bg-color"] { display: none !important; }
+
+/* ============================================================
+   Table des matières (sidebar)
+   ============================================================ */
 
 .sidebar-toc-wrapper {
   background-color: #F4F8FF;
@@ -514,7 +555,8 @@ a .glyphicon-share,
   margin: 0;
 }
 
-.sidebar-page-toc a {
+.sidebar-page-toc a,
+.sidebar-page-toc .toc-link {
   display: block;
   padding: 5px 8px;
   color: #333 !important;
@@ -523,15 +565,23 @@ a .glyphicon-share,
   border-radius: 4px;
   border-left: 2px solid transparent;
   transition: all 0.15s;
+  cursor: pointer;
 }
 
-.sidebar-page-toc a:hover {
+.sidebar-page-toc a:hover,
+.sidebar-page-toc .toc-link:hover {
   color: #016BB6 !important;
   border-left-color: #016BB6;
   background-color: rgba(1, 107, 182, 0.06);
 }
 
-/* Fallback if JS doesn't move it */
+.sidebar-page-toc .toc-active {
+  color: #016BB6 !important;
+  border-left-color: #016BB6;
+  font-weight: 700;
+}
+
+/* Fallback si le JS ne déplace pas la TOC */
 .markdown-toc {
   background-color: #F4F8FF;
   border: 1px solid #016BB6;
@@ -543,7 +593,10 @@ a .glyphicon-share,
   font-size: 14px;
 }
 
-/* Left sidebar navigation */
+/* ============================================================
+   Navigation latérale (sidebar)
+   ============================================================ */
+
 #sidebar-wrapper {
   padding-right: 0;
 }
@@ -557,17 +610,14 @@ a .glyphicon-share,
   padding: 15px 0;
 }
 
-/* Nav list scrolls */
 #sidebar-list {
-  flex: 1;
   overflow-y: auto;
   min-height: 0;
 }
 
-/* TOC section stays at bottom */
 .sidebar-toc-section {
-  flex-shrink: 0;
-  max-height: 40%;
+  flex-shrink: 1;
+  max-height: 35vh;
   overflow-y: auto;
   border-top: 1px solid #e8e8e8;
   margin-top: 8px;
@@ -615,7 +665,6 @@ a .glyphicon-share,
   display: block;
 }
 
-/* Level 2 — indent only, no border */
 .sidebar-list > li > .sidebar-sub > li > a {
   font-size: 13px;
   padding: 6px 12px 6px 30px;
@@ -632,7 +681,6 @@ a .glyphicon-share,
   font-weight: 700;
 }
 
-/* Level 3 */
 .sidebar-list > li > .sidebar-sub > li > .sidebar-sub > li > a {
   font-size: 12px;
   padding: 5px 10px 5px 44px;
@@ -649,7 +697,10 @@ a .glyphicon-share,
   font-weight: 700;
 }
 
-/* Hamburger button — hidden on desktop */
+/* ============================================================
+   Hamburger (masqué sur desktop)
+   ============================================================ */
+
 #nav-toggle {
   display: none;
   flex-direction: column;
@@ -675,7 +726,6 @@ a .glyphicon-share,
 #nav-toggle.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
 #nav-toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-/* Mobile overlay backdrop */
 #mobile-overlay {
   display: none;
   position: fixed;
@@ -689,7 +739,10 @@ a .glyphicon-share,
   display: block;
 }
 
-/* Tablet + Mobile (<992px): hamburger visible, sidebar becomes drawer */
+/* ============================================================
+   Responsive — Tablette (<992px)
+   ============================================================ */
+
 @media (max-width: 991px) {
   #nav-toggle { display: flex; }
 
@@ -714,28 +767,33 @@ a .glyphicon-share,
 
   #segment-ig-title .ig-title { font-size: 22px; }
 
-  /* Hide nav links — use hamburger → sidebar drawer */
   #aphp-nav { display: none !important; }
+
+  .nav.nav-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    height: auto;
+    min-height: 50px;
+  }
+  .nav.nav-tabs > li > a,
+  .nav.nav-tabs > li > a:link,
+  .nav.nav-tabs > li > a:visited {
+    padding: 12px 20px !important;
+    font-size: 14px !important;
+    white-space: nowrap;
+  }
+
+  #content-wrapper > .inner-wrapper.has-tabs {
+    padding: 20px !important;
+  }
 
   table th, table td { padding: 12px 15px; }
 
-  /* table.colsi — stack on tablet/mobile */
-  table.colsi {
-    display: block;
-  }
-  table.colsi tbody {
-    display: block;
-  }
-  table.colsi tr {
-    display: block;
-    margin-bottom: 5px;
-  }
-  table.colsi td {
-    display: block;
-    width: 100% !important;
-  }
+  table.colsi { display: block; }
+  table.colsi tbody { display: block; }
+  table.colsi tr { display: block; margin-bottom: 5px; }
+  table.colsi td { display: block; width: 100% !important; }
 
-  /* Sidebar as slide-in drawer */
   #sidebar-wrapper {
     display: flex !important;
     flex-direction: column;
@@ -766,7 +824,10 @@ a .glyphicon-share,
   }
 }
 
-/* Mobile (<768px): tighter layout */
+/* ============================================================
+   Responsive — Mobile (<768px)
+   ============================================================ */
+
 @media (max-width: 767px) {
   #segment-header-nav { padding: 10px 15px; }
 
@@ -792,22 +853,39 @@ a .glyphicon-share,
     font-size: 14px;
   }
 
-  #segment-footer .inner-wrapper {
+  #segment-footer .inner-wrapper p {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
+    align-items: center;
+    text-align: center;
   }
+  #segment-footer .inner-wrapper p span { margin-left: 0; }
 
   p, li { font-size: 15px; }
+
+  .nav.nav-tabs > li > a,
+  .nav.nav-tabs > li > a:link,
+  .nav.nav-tabs > li > a:visited {
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+
+  #content-wrapper > .inner-wrapper.has-tabs {
+    padding: 15px !important;
+  }
 }
 
-/* Hide anchor link icons on headings */
+/* ============================================================
+   Icônes d'ancrage
+   ============================================================ */
+
 .anchorjs-link {
   display: none !important;
 }
 
-/* Hierarchy tree */
-/* Tree connector lines — subtle gray */
+/* ============================================================
+   Arbre de hiérarchie (StructureDefinition)
+   ============================================================ */
+
 img.hierarchy[src*="tbl_"] {
   opacity: 0.3 !important;
   width: 16px !important;
@@ -815,7 +893,6 @@ img.hierarchy[src*="tbl_"] {
   vertical-align: middle !important;
 }
 
-/* Status/fire icons — keep visible and colored */
 img.hierarchy:not([src*="tbl_"]) {
   width: 16px !important;
   height: 16px !important;
@@ -840,8 +917,9 @@ td.hierarchy a:hover {
   color: #016BB6;
 }
 
-/* Misc */
-h6 { font-size: 13px; }
+/* ============================================================
+   Divers
+   ============================================================ */
 
 .viewer-container { width: 100%; overflow: hidden; position: relative; }
 .svg-container { width: 100%; height: 100%; cursor: grab; position: absolute; top: 0; left: 0; }
