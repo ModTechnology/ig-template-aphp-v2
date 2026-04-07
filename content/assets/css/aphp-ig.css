@@ -4,7 +4,9 @@
  * Basé sur Bootstrap 3 (via le publisher) avec la charte graphique AP-HP.
  */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@200;400;700&display=swap');
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 200; font-display: swap; src: url('../fonts/inter-200.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('../fonts/inter-400.woff2') format('woff2'); }
+@font-face { font-family: 'Inter'; font-style: normal; font-weight: 700; font-display: swap; src: url('../fonts/inter-700.woff2') format('woff2'); }
 
 /* ============================================================
    Variables
@@ -50,10 +52,9 @@
   padding-right: 30px !important;
 }
 
-body {
-  opacity: 0;
-  transition: opacity 0.15s ease;
-}
+/* Masquer uniquement les éléments déplacés par JS pour éviter le flash */
+#publish-box, .publish-box { opacity: 0; }
+.inner-wrapper > .nav.nav-tabs { opacity: 0; }
 
 body, p, li, td, th, span, div, a, input, select, textarea {
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
@@ -328,7 +329,6 @@ h2::before, h3::before, h4::before, h5::before, h6::before {
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Inter', sans-serif !important;
   color: #000000;
-  scroll-margin-top: 24px;
 }
 
 h1 { font-size: 32px; font-weight: 700; }
@@ -487,13 +487,6 @@ table.colsi td span.copy-text {
   padding: 0;
 }
 
-#segment-footer .inner-wrapper p {
-  color: #016BB6 !important;
-  font-size: 13px;
-  line-height: 1.6;
-  margin: 0;
-}
-
 #segment-footer, #segment-footer * {
   color: #016BB6 !important;
 }
@@ -505,6 +498,9 @@ table.colsi td span.copy-text {
   width: 100%;
   flex-wrap: wrap;
   gap: 8px;
+  font-size: 13px;
+  line-height: 1.6;
+  margin: 0;
 }
 #segment-footer .inner-wrapper p br { display: none; }
 #segment-footer .inner-wrapper p span { color: #016BB6 !important; margin-left: auto; }
@@ -564,7 +560,6 @@ table.colsi td span.copy-text {
   font-size: 13px;
   border-radius: 4px;
   border-left: 2px solid transparent;
-  transition: all 0.15s;
 }
 
 .sidebar-page-toc a:hover {
@@ -573,17 +568,7 @@ table.colsi td span.copy-text {
   background-color: rgba(1, 107, 182, 0.06);
 }
 
-/* Fallback si le JS ne déplace pas la TOC */
-.markdown-toc {
-  background-color: #F4F8FF;
-  border: 1px solid #016BB6;
-  border-radius: 4px;
-  padding: 15px;
-  float: right;
-  margin: 0 0 15px 20px;
-  max-width: 280px;
-  font-size: 14px;
-}
+.markdown-toc { display: none; }
 
 /* ============================================================
    Navigation latérale (sidebar)
@@ -647,44 +632,25 @@ table.colsi td span.copy-text {
   background-color: transparent;
 }
 
-.sidebar-sub {
-  display: none;
-  margin-top: 2px;
-  margin-bottom: 2px;
-}
+/* Enfants masqués par défaut, visibles si groupe actif */
+.sidebar-child { display: none; }
+.sidebar-child[data-open="true"] { display: block; }
 
-.sidebar-sub.open {
-  display: block;
-}
+/* Niveaux de profondeur du sidebar */
+.sidebar-depth-1 > a { padding-left: 30px; font-size: 13px; color: #555; }
+.sidebar-depth-2 > a { padding-left: 44px; font-size: 12px; color: #777; }
+.sidebar-depth-3 > a { padding-left: 58px; font-size: 12px; color: #999; }
 
-.sidebar-list > li > .sidebar-sub > li > a {
-  font-size: 13px;
-  padding: 6px 12px 6px 30px;
-  color: #555;
-}
-
-.sidebar-list > li > .sidebar-sub > li > a:hover {
+.sidebar-depth-1 > a:hover,
+.sidebar-depth-2 > a:hover,
+.sidebar-depth-3 > a:hover {
   background-color: #F4F8FF;
   color: #016BB6;
 }
 
-.sidebar-list > li > .sidebar-sub > li > a.active {
-  color: #016BB6;
-  font-weight: 700;
-}
-
-.sidebar-list > li > .sidebar-sub > li > .sidebar-sub > li > a {
-  font-size: 12px;
-  padding: 5px 10px 5px 44px;
-  color: #777;
-}
-
-.sidebar-list > li > .sidebar-sub > li > .sidebar-sub > li > a:hover {
-  background-color: #F4F8FF;
-  color: #016BB6;
-}
-
-.sidebar-list > li > .sidebar-sub > li > .sidebar-sub > li > a.active {
+.sidebar-depth-1 > a.active,
+.sidebar-depth-2 > a.active,
+.sidebar-depth-3 > a.active {
   color: #016BB6;
   font-weight: 700;
 }
