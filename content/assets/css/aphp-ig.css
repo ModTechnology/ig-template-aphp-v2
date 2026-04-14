@@ -311,6 +311,7 @@ a .glyphicon-share,
 #segment-content {
   padding-top: 20px;
   padding-bottom: 40px;
+  min-height: calc(100vh - 200px);
 }
 
 #segment-content .container {
@@ -392,8 +393,8 @@ table td {
   font-size: 14px;
 }
 
-table:not(.colsi) tr td { background-color: #FFFFFF !important; }
-table:not(.colsi) tr th { background-color: #DEEAFF !important; }
+table:not(.colsi):not(.colsd) tr td { background-color: #FFFFFF !important; }
+table:not(.colsi):not(.colsd) tr th { background-color: #DEEAFF !important; }
 
 /* Tableau de dépendances */
 table[id="dep"] {
@@ -424,24 +425,24 @@ table[id="dep"] tr td {
 }
 
 /* Tableau de métadonnées (Official URL, Version) */
-table.colsi {
+table.colsi, table.colsd {
   border: none;
   width: 100%;
   border-collapse: separate !important;
   border-spacing: 5px 5px !important;
 }
-table.colsi td {
+table.colsi td, table.colsd td {
   background-color: #DEEAFF !important;
   padding: 15px 30px !important;
   border: none !important;
   font-style: normal;
   font-weight: 400;
 }
-table.colsi td i {
+table.colsi td i, table.colsd td i {
   font-style: italic;
   font-weight: 300;
 }
-table.colsi td span.copy-text {
+table.colsi td span.copy-text, table.colsd td span.copy-text {
   font-weight: 700;
   font-style: normal;
 }
@@ -533,12 +534,6 @@ table.colsi td span.copy-text {
 }
 
 .sidebar-page-toc {
-  background: none !important;
-  border: none !important;
-  float: none !important;
-  max-width: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
   font-size: 13px;
 }
 
@@ -559,16 +554,18 @@ table.colsi td span.copy-text {
   text-decoration: none;
   font-size: 13px;
   border-radius: 4px;
-  border-left: 2px solid transparent;
 }
 
 .sidebar-page-toc a:hover {
   color: #016BB6 !important;
-  border-left-color: #016BB6;
   background-color: rgba(1, 107, 182, 0.06);
 }
 
-.markdown-toc { display: none; }
+.sidebar-page-toc a.toc-active {
+  color: #016BB6 !important;
+  font-weight: 600;
+}
+
 
 /* ============================================================
    Navigation latérale (sidebar)
@@ -593,12 +590,10 @@ table.colsi td span.copy-text {
 }
 
 .sidebar-toc-section {
-  flex-shrink: 1;
+  position: fixed;
+  bottom: 20px;
   max-height: 35vh;
   overflow-y: auto;
-  border-top: 1px solid #e8e8e8;
-  margin-top: 8px;
-  padding-top: 4px;
 }
 
 .sidebar-list, .sidebar-list ul {
@@ -629,28 +624,20 @@ table.colsi td span.copy-text {
 .sidebar-list a.active {
   color: #016BB6;
   font-weight: 700;
-  background-color: transparent;
+  background-color: #F4F8FF;
 }
 
 /* Enfants masqués par défaut, visibles si groupe actif */
 .sidebar-child { display: none; }
 .sidebar-child[data-open="true"] { display: block; }
 
-/* Niveaux de profondeur du sidebar */
-.sidebar-depth-1 > a { padding-left: 30px; font-size: 13px; color: #555; }
-.sidebar-depth-2 > a { padding-left: 44px; font-size: 12px; color: #777; }
-.sidebar-depth-3 > a { padding-left: 58px; font-size: 12px; color: #999; }
-
-.sidebar-depth-1 > a:hover,
-.sidebar-depth-2 > a:hover,
-.sidebar-depth-3 > a:hover {
+/* Niveaux de profondeur du sidebar (appliqués par JS) */
+.sidebar-child > a:hover {
   background-color: #F4F8FF;
   color: #016BB6;
 }
 
-.sidebar-depth-1 > a.active,
-.sidebar-depth-2 > a.active,
-.sidebar-depth-3 > a.active {
+.sidebar-child > a.active {
   color: #016BB6;
   font-weight: 700;
 }
@@ -747,10 +734,10 @@ table.colsi td span.copy-text {
 
   table th, table td { padding: 12px 15px; }
 
-  table.colsi { display: block; }
-  table.colsi tbody { display: block; }
-  table.colsi tr { display: block; margin-bottom: 5px; }
-  table.colsi td { display: block; width: 100% !important; }
+  table.colsi, table.colsd { display: block; }
+  table.colsi tbody, table.colsd tbody { display: block; }
+  table.colsi tr, table.colsd tr { display: block; margin-bottom: 5px; }
+  table.colsi td, table.colsd td { display: block; width: 100% !important; }
 
   #sidebar-wrapper {
     display: flex !important;
