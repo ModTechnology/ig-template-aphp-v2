@@ -91,8 +91,19 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   align-items: baseline;
   justify-content: space-between;
   margin-bottom: 24px;
-  padding-top: 15px;
+  /* Alignement avec le contenu de .col-12 (padding Bootstrap 3 = 15px) */
+  padding-left: 15px;
+  padding-right: 15px;
+  /* Baseline alignée avec le premier item sidebar */
+  padding-top: 12px;
   gap: 16px;
+}
+
+/* Sur les pages avec onglets, .inner-wrapper.has-tabs a déjà un padding de 40px
+   et .col-12 à l'intérieur a padding: 0. Le titre ne doit pas avoir de padding supplémentaire. */
+.inner-wrapper.has-tabs > #segment-ig-title {
+  padding-left: 0;
+  padding-right: 0;
 }
 #segment-ig-title .ig-title {
   font-size: 26px;
@@ -892,9 +903,11 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
 .anchorjs-link {
   opacity: 0;
   transition: opacity 0.15s;
-  text-decoration: none;
-  color: #016BB6 !important;
-  padding-left: 6px;
+  text-decoration: none !important;
+  color: #999 !important;
+  padding-left: 8px;
+  font-weight: 400;
+  font-size: 0.75em;
 }
 
 h1:hover .anchorjs-link,
@@ -905,6 +918,10 @@ h5:hover .anchorjs-link,
 h6:hover .anchorjs-link,
 .anchorjs-link:focus {
   opacity: 1;
+}
+
+.anchorjs-link:hover {
+  color: #016BB6 !important;
 }
 
 /* ============================================================

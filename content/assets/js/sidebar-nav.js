@@ -5,32 +5,6 @@
  */
 (function() {
 
-  /* --- Alignement du titre de l'IG avec le contenu de la page --- */
-  (function alignIgTitle() {
-    var igTitle = document.getElementById('segment-ig-title');
-    var innerWrap = document.querySelector('#content-wrapper > .inner-wrapper');
-    if (!igTitle || !innerWrap) return;
-
-    function apply() {
-      var sibling = igTitle.nextElementSibling;
-      while (sibling && (sibling.matches('.nav-tabs') || sibling.matches('script') || sibling.matches('style'))) {
-        sibling = sibling.nextElementSibling;
-      }
-      if (sibling) {
-        var innerRect = innerWrap.getBoundingClientRect();
-        var siblingRect = sibling.getBoundingClientRect();
-        igTitle.style.paddingLeft = (siblingRect.left - innerRect.left) + 'px';
-        igTitle.style.paddingRight = (innerRect.right - siblingRect.right) + 'px';
-      } else {
-        igTitle.style.paddingLeft = '';
-        igTitle.style.paddingRight = '';
-      }
-    }
-
-    apply();
-    window.addEventListener('resize', apply);
-  })();
-
   /* --- Page active + profondeur dynamique dans le sidebar --- */
 
   var sidebarList = document.getElementById('sidebar-list');
