@@ -79,17 +79,21 @@ h3,h4,h5,h6{--heading-prefix:"{{site.data.info.headingOffset}}{{site.data.pages[
 <div id="segment-content" class="segment">
     <div class="container">
         <div class="row">
-            <div class="col-lg-3 col-md-4 hidden-sm hidden-xs" id="sidebar-wrapper">
-                <nav id="sidebar-nav">
+            <div class="col-lg-3 col-md-4 sidebar-col">
+                <div class="sidebar-sticky">
+                    <div id="sidebar-wrapper" aria-label="Navigation">
+                        <nav id="sidebar-nav" aria-label="Navigation principale">
                     <ul class="sidebar-list" id="sidebar-list" data-current-path="{{ page.path }}">
                     {% for p in site.data.pages %}{% assign pg_path = p[0] %}{% assign pg = p[1] %}{% if pg.title and pg.label and pg.label != '' and pg.label != '0' and pg.label != '0.0' %}{% unless pg_path contains '-definitions.' or pg_path contains '-mappings.' or pg_path contains '-history.' or pg_path contains '-examples.' or pg_path contains '-testing.' or pg_path contains '-changes.' or pg_path contains '-profiles.' or pg_path contains '.profile.xml.' or pg_path contains '.profile.json.' or pg_path contains '.profile.ttl.' or pg.title contains ' - Definitions' or pg.title contains ' - Mappings' or pg.title contains ' - Profile Change History' or pg.title contains ' - Resource Change History' or pg.title contains ' - XML Representation' or pg.title contains ' - JSON Representation' or pg.title contains ' - TTL Representation' %}{% assign lp = pg.label | split: '.' %}{% assign ll = lp | last %}{% if ll == '0' %}{% assign d = lp.size | minus: 2 %}{% else %}{% assign d = lp.size | minus: 1 %}{% endif %}{% if d < 0 %}{% assign d = 0 %}{% endif %}<li class="sidebar-depth-{{ d }}{% if d > 0 %} sidebar-child{% endif %}" data-group="{{ lp | first }}"><a href="{{ pg_path }}">{{ pg.title | escape_once }}</a></li>
                     {% endunless %}{% endif %}{% endfor %}
                     </ul>
                 </nav>
+                    </div>
+                </div>
             </div>
             <div class="col-lg-9 col-md-8 col-sm-12" id="content-wrapper">
-                <div id="segment-ig-title">
-                    <span class="ig-title">{{site.data.fhir.ig.title | escape_once}}</span>
-                    <span class="ig-version">{{site.data.fhir.ig.version}} - {{site.data.info.releaselabel}}</span>
-                </div>
                 <div class="inner-wrapper">
+                    <div id="segment-ig-title">
+                        <span class="ig-title">{{site.data.fhir.ig.title | escape_once}}</span>
+                        <span class="ig-version">{{site.data.fhir.ig.version}} - {{site.data.info.releaselabel}}</span>
+                    </div>

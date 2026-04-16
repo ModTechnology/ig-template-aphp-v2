@@ -91,6 +91,7 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   align-items: baseline;
   justify-content: space-between;
   margin-bottom: 24px;
+  padding-top: 15px;
   gap: 16px;
 }
 #segment-ig-title .ig-title {
@@ -117,6 +118,7 @@ body, p, li, td, th, span, div, a, input, select, textarea {
   align-items: center;
   justify-content: space-between;
   padding: 20px 30px;
+  gap: 40px;
 }
 
 #segment-header-nav #family-nav {
@@ -334,10 +336,24 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 { font-size: 32px; font-weight: 700; }
 h2 { font-size: 24px; font-weight: 700; margin-top: 60px; margin-bottom: 20px; }
-h3 { font-size: 20px; font-weight: 700; margin-top: 40px; margin-bottom: 15px; }
-h4 { font-size: 18px; font-weight: 700; margin-top: 30px; margin-bottom: 12px; }
+h3 { font-size: 20px; font-weight: 700; margin-top: 50px; margin-bottom: 15px; }
+h4 { font-size: 18px; font-weight: 700; margin-top: 40px; margin-bottom: 12px; }
 h6 { font-size: 13px; }
-h1:first-child, h2:first-child { margin-top: 0; }
+
+/* Premier titre de la page - pas de marge en haut */
+.inner-wrapper > h1:first-child,
+.inner-wrapper > h2:first-child,
+.inner-wrapper > .col-12 > h1:first-child,
+.inner-wrapper > .col-12 > h2:first-child {
+  margin-top: 0;
+}
+
+/* Espacement supplémentaire après listes et paragraphes */
+ul + h2, ol + h2, p + h2,
+ul + h3, ol + h3, p + h3,
+ul + h4, ol + h4, p + h4 {
+  margin-top: 50px;
+}
 
 /* ============================================================
    Texte
@@ -520,7 +536,10 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
   background-color: #F4F8FF;
   border-radius: 8px;
   padding: 14px 12px;
-  margin: 0 8px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .sidebar-toc-title {
@@ -535,6 +554,9 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
 
 .sidebar-page-toc {
   font-size: 13px;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 .sidebar-page-toc ul {
@@ -575,25 +597,39 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
   padding-right: 0;
 }
 
-#sidebar-nav {
+/* Wrapper autour de la sidebar pour isolation du sticky/fixed */
+.sidebar-sticky {
   position: sticky;
   top: 20px;
   max-height: calc(100vh - 40px);
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  padding: 15px 0;
 }
 
-#sidebar-list {
-  overflow-y: auto;
+@media (min-width: 992px) {
+  #segment-content > .container > .row {
+    display: flex;
+  }
+}
+
+#sidebar-nav {
+  padding: 15px 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   min-height: 0;
 }
 
-.sidebar-toc-section {
-  position: fixed;
-  bottom: 20px;
-  max-height: 35vh;
+#sidebar-list {
+  flex: 0 1 auto;
+  min-height: 0;
   overflow-y: auto;
+}
+
+.sidebar-toc-section {
+  margin-top: 10px;
+  padding: 0 8px;
 }
 
 .sidebar-list, .sidebar-list ul {
@@ -685,6 +721,17 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
 }
 
 /* ============================================================
+   Responsive — Resserrage menu intermédiaire (<1280px)
+   ============================================================ */
+
+@media (max-width: 1279px) {
+  #aphp-nav .nav.navbar-nav > li > a {
+    padding: 15px 12px;
+    font-size: 15px;
+  }
+}
+
+/* ============================================================
    Responsive — Tablette (<992px)
    ============================================================ */
 
@@ -739,6 +786,21 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
   table.colsi tr, table.colsd tr { display: block; margin-bottom: 5px; }
   table.colsi td, table.colsd td { display: block; width: 100% !important; }
 
+  /* Colonne neutralisée : plus d'espace dans le flux, mais pas display:none
+     (sinon l'enfant fixed ci-dessous serait masqué aussi) */
+  .sidebar-col {
+    width: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  /* Sticky desktop neutralisé en mobile */
+  .sidebar-sticky {
+    position: static !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
   #sidebar-wrapper {
     display: flex !important;
     flex-direction: column;
@@ -761,6 +823,10 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
     max-height: 100%;
     flex: 1;
     min-height: 0;
+  }
+
+  .sidebar-toc-section {
+    display: none !important;
   }
 
   #sidebar-wrapper.open {
@@ -824,7 +890,21 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
    ============================================================ */
 
 .anchorjs-link {
-  display: none !important;
+  opacity: 0;
+  transition: opacity 0.15s;
+  text-decoration: none;
+  color: #016BB6 !important;
+  padding-left: 6px;
+}
+
+h1:hover .anchorjs-link,
+h2:hover .anchorjs-link,
+h3:hover .anchorjs-link,
+h4:hover .anchorjs-link,
+h5:hover .anchorjs-link,
+h6:hover .anchorjs-link,
+.anchorjs-link:focus {
+  opacity: 1;
 }
 
 /* ============================================================
