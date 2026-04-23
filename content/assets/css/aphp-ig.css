@@ -834,6 +834,10 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
     max-height: 100%;
     flex: 1;
     min-height: 0;
+    /* Scroll vertical interne si la nav dépasse la hauteur du drawer.
+       Sans ça, les items du bas sont inaccessibles sur les gros IG. */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .sidebar-toc-section {
@@ -901,27 +905,7 @@ table.colsi td span.copy-text, table.colsd td span.copy-text {
    ============================================================ */
 
 .anchorjs-link {
-  opacity: 0;
-  transition: opacity 0.15s;
-  text-decoration: none !important;
-  color: #999 !important;
-  padding-left: 8px;
-  font-weight: 400;
-  font-size: 0.75em;
-}
-
-h1:hover .anchorjs-link,
-h2:hover .anchorjs-link,
-h3:hover .anchorjs-link,
-h4:hover .anchorjs-link,
-h5:hover .anchorjs-link,
-h6:hover .anchorjs-link,
-.anchorjs-link:focus {
-  opacity: 1;
-}
-
-.anchorjs-link:hover {
-  color: #016BB6 !important;
+  display: none !important;
 }
 
 /* ============================================================
@@ -946,8 +930,36 @@ td.hierarchy {
   padding: 8px 10px !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 13px !important;
-  white-space: nowrap;
+  /* Wrap autorisé par défaut pour Type/Description (évite le scroll horizontal).
+     !important nécessaire car le publisher applique parfois du nowrap inline. */
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+  vertical-align: top;
 }
+
+/* Les liens dans les cellules (typiquement les noms de profils dans la colonne Type)
+   doivent aussi autoriser le wrap, sinon ils restent sur une ligne */
+td.hierarchy a {
+  white-space: normal !important;
+  word-break: break-word !important;
+  overflow-wrap: anywhere !important;
+}
+
+/* Première colonne : arbre de hiérarchie, doit rester en nowrap
+   pour préserver l'alignement des icônes et de l'indentation */
+td.hierarchy:first-child {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
+td.hierarchy:first-child a {
+  white-space: nowrap !important;
+  word-break: normal !important;
+  overflow-wrap: normal !important;
+}
+
 
 td.hierarchy a {
   color: #000000;
@@ -963,9 +975,38 @@ td.hierarchy a:hover {
    Divers
    ============================================================ */
 
-.viewer-container { width: 100%; overflow: hidden; position: relative; }
+.viewer-container {
+  width: 100%;
+  position: relative;
+  min-height: 120px;
+  /* overflow: hidden retiré : empêchait le fallback d'erreur PlantUML de s'afficher
+     correctement et causait un chevauchement avec le contenu voisin */
+}
 .svg-container { width: 100%; height: 100%; cursor: grab; position: absolute; top: 0; left: 0; }
 .svg-container.grabbing { cursor: grabbing; }
+
+/* Fallback d'erreur PlantUML/Graphviz (par défaut affiché en vert vif en gras,
+   ce qui déborde visuellement de la page). On le présente comme une erreur
+   technique plus discrète et délimitée. */
+.viewer-container pre,
+.viewer-container font[color="red"],
+.viewer-container font[color="green"],
+.viewer-container [style*="color:green"],
+.viewer-container [style*="color: green"] {
+  color: #B71C1C !important;
+  font-family: 'Consolas', 'Menlo', monospace !important;
+  font-size: 12px !important;
+  font-weight: normal !important;
+  background: #FFEBEE;
+  border: 1px solid #EF9A9A;
+  border-radius: 4px;
+  padding: 12px 16px;
+  margin: 8px 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+  display: block;
+}
 
 .ig-figure { display: block; margin-left: auto; margin-right: auto; margin-bottom: 10px; }
 .ig-figure-img { border: 1px solid #e0e0e0; border-radius: 0.375rem; max-width: 100%; height: auto; padding: 2px; margin-bottom: 0.5rem; line-height: 1; }

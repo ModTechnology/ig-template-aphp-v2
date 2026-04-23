@@ -156,6 +156,26 @@
     overlay.addEventListener('click', closeDrawer);
   }
 
+  // Fermer le drawer au click sur un lien de navigation (sinon il reste ouvert
+  // pendant le chargement de la page suivante ou le scroll vers une ancre).
+  if (sidebarWrapper) {
+    var sidebarLinks = sidebarWrapper.querySelectorAll('a[href]');
+    for (var sl = 0; sl < sidebarLinks.length; sl++) {
+      sidebarLinks[sl].addEventListener('click', function() {
+        if (sidebarWrapper.classList.contains('open')) closeDrawer();
+      });
+    }
+  }
+
+  // Si l'utilisateur élargit la fenêtre au-dessus du breakpoint mobile alors
+  // que le drawer est ouvert, on remet l'état desktop propre (sinon body reste
+  // figé par overflow:hidden et le focus trap reste actif).
+  window.addEventListener('resize', function() {
+    if (window.innerWidth >= 992 && sidebarWrapper.classList.contains('open')) {
+      closeDrawer();
+    }
+  });
+
 
   /* --- Table des matières (TOC) --- */
 
@@ -167,10 +187,30 @@
 
     var allHeadings = innerContent.querySelectorAll('h2[id], h3[id], h4[id]');
     var headings = [];
+    var seenIds = {};
     for (var j = 0; j < allHeadings.length; j++) {
-      var tabPane = allHeadings[j].closest('.tab-pane');
+      var h = allHeadings[j];
+
+      // 1. Exclure les tabs Bootstrap inactifs (structure standard .tab-pane).
+      //    Couvre les onglets niveau 1 des pages profil FHIR (Content / Mappings / XML / JSON).
+      var tabPane = h.closest('.tab-pane');
       if (tabPane && !tabPane.classList.contains('active')) continue;
-      headings.push(allHeadings[j]);
+
+      // 2. Exclure les éléments réellement cachés en CSS (display:none hérité
+      //    d'un ancêtre). Couvre les tabs imbriqués, accordéons fermés, etc.,
+      //    sans supposer une structure HTML particulière. Générique : marche
+      //    pour tout mécanisme standard de masquage par display:none.
+      if (h.offsetParent === null) continue;
+
+      // 3. Dédupliquer par id : un ancre doit être unique dans le document.
+      //    Si le publisher en génère plusieurs avec le même id (cas observé
+      //    sur les vues multiples d'un même profil), on ne garde que la première.
+      //    Pas de déduplication par texte : deux sections distinctes peuvent
+      //    légitimement porter le même intitulé.
+      if (seenIds[h.id]) continue;
+      seenIds[h.id] = true;
+
+      headings.push(h);
     }
 
     if (headings.length > 0) {
@@ -231,20 +271,41 @@
           if (target) spyHeadings.push({ link: tocAllLinks[s], target: target });
         }
 
+        function setActiveTocLink(link) {
+          for (var i = 0; i < tocAllLinks.length; i++) {
+            tocAllLinks[i].classList.remove('toc-active');
+            tocAllLinks[i].removeAttribute('aria-current');
+          }
+          if (link) {
+            link.classList.add('toc-active');
+            link.setAttribute('aria-current', 'location');
+          }
+        }
+
+        // Click direct sur un lien TOC : on fixe l'état actif immédiatement.
+        // Sinon l'IntersectionObserver peut rater le scroll si la cible atterrit
+        // hors de la zone -10%/-80%. On suspend l'observer pendant 800ms pour
+        // ne pas écraser le choix utilisateur pendant le scroll smooth.
+        var clickLockUntil = 0;
+        for (var s = 0; s < tocAllLinks.length; s++) {
+          (function(link) {
+            link.addEventListener('click', function() {
+              setActiveTocLink(link);
+              clickLockUntil = Date.now() + 800;
+            });
+          })(tocAllLinks[s]);
+        }
+
         // IntersectionObserver : quand un heading entre dans la zone de lecture
         if ('IntersectionObserver' in window) {
           var headingObserver = new IntersectionObserver(function(entries) {
+            if (Date.now() < clickLockUntil) return;
             entries.forEach(function(entry) {
               if (entry.isIntersecting) {
                 var id = '#' + entry.target.id;
-                for (var s = 0; s < tocAllLinks.length; s++) {
-                  tocAllLinks[s].classList.remove('toc-active');
-                  tocAllLinks[s].removeAttribute('aria-current');
-                }
                 for (var s = 0; s < spyHeadings.length; s++) {
                   if ('#' + spyHeadings[s].target.id === id) {
-                    spyHeadings[s].link.classList.add('toc-active');
-                    spyHeadings[s].link.setAttribute('aria-current', 'location');
+                    setActiveTocLink(spyHeadings[s].link);
                     break;
                   }
                 }
